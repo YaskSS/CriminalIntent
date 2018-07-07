@@ -1,5 +1,6 @@
 package com.example.ass_boss.criminalintent;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -22,6 +23,7 @@ public class CrimeListFragment extends Fragment {
 
     private RecyclerView crimeRecyclerView;
     private CrimeAdapter adapter;
+    private static final int CRIME_ACTIVITY_REQUEST_CODE = 534;
 
     @Nullable
     @Override
@@ -37,7 +39,8 @@ public class CrimeListFragment extends Fragment {
 
     private void updateUI() {
         CrimeLab crimeLab = CrimeLab.getInstance(getActivity());
-        adapter = new CrimeAdapter(crimeLab.getCrimes());
+        List<Crime> crimeList = crimeLab.getCrimes();
+        adapter = new CrimeAdapter(crimeList);
         crimeRecyclerView.setAdapter(adapter);
     }
 
@@ -69,8 +72,8 @@ public class CrimeListFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
-            Intent intent = CrimeActivity.newIntent(getActivity(), crime.getId());
-            startActivity(intent);
+            Intent intent = CrimeActivity.newIntent(getActivity(), crime.getId(), getLayoutPosition());
+           startActivityForResult(intent, CRIME_ACTIVITY_REQUEST_CODE);
         }
     }
 
@@ -150,6 +153,17 @@ public class CrimeListFragment extends Fragment {
             } else {
                 return CRIME_TYPE;
             }
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CRIME_ACTIVITY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            if (data == null) {
+                return;
+            }
+            adapter.notifyItemChanged(data.getIntExtra(CrimeActivity.EXTRA_CRIME_POSITION, 0));
         }
     }
 }

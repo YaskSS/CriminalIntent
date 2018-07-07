@@ -1,9 +1,11 @@
 package com.example.ass_boss.criminalintent;
 
+import android.support.annotation.NonNull;
+
 import java.util.Date;
 import java.util.UUID;
 
-public class Crime {
+public class Crime implements Comparable<Crime> {
 
     private UUID id;
     private String title;
@@ -60,5 +62,10 @@ public class Crime {
         Crime crime = (Crime) obj;
 
         return crime.id == getId();
+    }
+
+    @Override
+    public int compareTo(@NonNull Crime o) {
+        return 0;
     }
 }
