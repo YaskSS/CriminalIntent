@@ -72,8 +72,8 @@ public class CrimeListFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
-            Intent intent = CrimeActivity.newIntent(getActivity(), crime.getId(), getLayoutPosition());
-           startActivityForResult(intent, CRIME_ACTIVITY_REQUEST_CODE);
+            Intent intent = CrimePagerActivity.newIntent(getActivity(), crime.getId());
+            startActivityForResult(intent, CRIME_ACTIVITY_REQUEST_CODE);
         }
     }
 
@@ -163,7 +163,8 @@ public class CrimeListFragment extends Fragment {
             if (data == null) {
                 return;
             }
-            adapter.notifyItemChanged(data.getIntExtra(CrimeActivity.EXTRA_CRIME_POSITION, 0));
+            //adapter.notifyItemChanged(data.getIntExtra(CrimePagerActivity.EXTRA_CRIME_POSITION, 0));
+            adapter.notifyDataSetChanged();
         }
     }
 }

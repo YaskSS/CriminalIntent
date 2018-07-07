@@ -17,7 +17,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".CrimeActivity"/>
+        <activity android:name=".CrimePagerActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
